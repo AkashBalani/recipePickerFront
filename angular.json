@@ -23,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "baseHref": "/angular/",
             "outputPath": "dist/recipe-picker-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
