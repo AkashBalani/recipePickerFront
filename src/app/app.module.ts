@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HealthComponent } from './health/health.component';
+import { ReadyComponent } from './ready/ready.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IngredientFormComponent
+    IngredientFormComponent,
+    HealthComponent,
+    ReadyComponent
   ],
   imports: [
     BrowserModule,
