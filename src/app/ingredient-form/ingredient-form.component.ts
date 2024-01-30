@@ -29,7 +29,7 @@ export class IngredientFormComponent {
       'Content-Type': 'application/json'
     });
 
-  this.http.post('http://127.0.0.1:80/django/apiv2/ingredients/', formData, { headers })
+  this.http.post('http://django-service/django/apiv2/ingredients/', formData, { headers })
     .subscribe(response => {
       console.log('Django API response:', response);
     }, error => {
