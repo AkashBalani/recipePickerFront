@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HealthComponent } from './health/health.component';
 import { ReadyComponent } from './ready/ready.component';
+import { IngredientFormComponent } from './ingredient-form/ingredient-form.component';
 
 const routes: Routes = [
   { path: 'health', component: HealthComponent },
-  { path: 'ready', component: ReadyComponent }
+  { path: 'ready', component: ReadyComponent },
+  { path: 'ingredient-form', component: IngredientFormComponent },
+  { path: '', redirectTo: '/ingredient-form', pathMatch: 'full'},
 ];
 
 @NgModule({
