@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HealthComponent } from './health/health.component';
 import { ReadyComponent } from './ready/ready.component';
+import { FindRecipesComponent } from './find-recipes/find-recipes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IngredientFormComponent,
     HealthComponent,
-    ReadyComponent
+    ReadyComponent,
+    FindRecipesComponent
   ],
   imports: [
     BrowserModule,

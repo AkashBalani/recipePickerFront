@@ -2,23 +2,23 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'app-ingredient-form',
-  templateUrl: './ingredient-form.component.html',
-  styleUrls: ['./ingredient-form.component.css']
+  selector: 'find-recipes',
+  templateUrl: './find-recipes.component.html',
+  styleUrls: ['./find-recipes.component.css']
 })
-export class IngredientFormComponent {
-  name: string = '';
-  quantity: number = 0;
-  date_of_expiry: string = '';
+export class FindRecipesComponent {
+  ingredients: string = '';
+  excluded: string = '';
+  calcium: string = '';
 
   constructor(private http: HttpClient) { }
 
   onSubmit() {
     // Call a service to send data to Django backend
     const formData = {
-      name: this.name,
-      quantity: this.quantity,
-      date_of_expiry: this.date_of_expiry
+      ingredients: this.ingredients,
+      excluded: this.excluded,
+      calcium: this.calcium,
     };
     // Add code here to send the form data to Django backend
     console.log('Form submitted:', formData);
@@ -27,7 +27,7 @@ export class IngredientFormComponent {
       'Content-Type': 'application/json'
     });
 
-  this.http.post('http://localhost/django/apiv2/ingredients/', formData, { headers })
+  this.http.post('http://localhost/django/apiv2/find-recipes/', formData, { headers })
     .subscribe(response => {
       console.log('Django API response:', response);
     }, error => {
