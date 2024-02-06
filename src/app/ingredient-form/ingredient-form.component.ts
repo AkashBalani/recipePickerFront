@@ -27,11 +27,16 @@ export class IngredientFormComponent {
       'Content-Type': 'application/json'
     });
 
-  this.http.post('http://localhost/django/apiv2/ingredients/', formData, { headers })
+  this.http.post('http://django-service:8000/django/api/ingredients/', formData, { headers })
     .subscribe(response => {
       console.log('Django API response:', response);
     }, error => {
       console.error('Error:', error);
+      if (error.name === 'HttpErrorResponse') {
+        console.error('Status:', error.status);
+        console.error('Message:', error.message);
+        console.error('Error:', error.error);
+      }
     });
   }
 }
