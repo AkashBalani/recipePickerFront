@@ -41,11 +41,11 @@ export class FindRecipesComponent {
     // this.ingredients.forEach(ingredient => {
     //   params = params.append('ingredient', ingredient);
     // });
-    if (this.ingredient) {
-      params = params.append('ingredient', this.ingredient);
-    }
+    this.ingredient.split(',').forEach(ingredient => {
+      params = params.append('ingredient', ingredient.trim());
+    });
     if (this.excluded) {
-      params = params.append('excluded', this.excluded);
+      params = params.append('exclude', this.excluded);
     }
     if (this.calcium) {
       params = params.append('calcium', this.calcium);

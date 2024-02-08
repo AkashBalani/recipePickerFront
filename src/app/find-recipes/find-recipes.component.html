@@ -2,12 +2,12 @@
 
 <form (ngSubmit)="onSubmit()">
     <label for="ingredient">Ingredient:</label>
-    <input type="text" id="ingredient" [(ngModel)]="ingredient" name="ingredient" required>
+    <input type="text" id="ingredient" [(ngModel)]="ingredient" name="ingredient" placeholder="Enter ingredients, separated by commas" required>
   
-    <label for="quantity">Excluded:</label>
+    <label for="excluded">Excluded:</label>
     <input type="text" id="excluded" [(ngModel)]="excluded" name="excluded">
   
-    <label for="dateOfExpiry">Calcium:</label>
+    <label for="Calcium">Calcium:</label>
     <input type="text" id="calcium" [(ngModel)]="calcium" name="calcium">
   
     <button type="submit">Submit</button>
