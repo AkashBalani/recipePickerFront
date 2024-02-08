@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class FindRecipesComponent {
   ingredient: string = '';
   excluded: string = '';
+  dietLabel: string = '';
   calcium: string = '';
 
   constructor(private http: HttpClient) { }
@@ -45,10 +46,13 @@ export class FindRecipesComponent {
       params = params.append('ingredient', ingredient.trim());
     });
     if (this.excluded) {
-      params = params.append('exclude', this.excluded);
+      params = params.append('excluded', this.excluded);
     }
     if (this.calcium) {
       params = params.append('calcium', this.calcium);
+    }
+    if(this.dietLabel) {
+      params = params.append('dietLabel', this.dietLabel);
     }
     // Add code here to send the form data to Django backend
         

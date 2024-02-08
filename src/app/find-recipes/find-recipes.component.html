@@ -5,9 +5,19 @@
     <input type="text" id="ingredient" [(ngModel)]="ingredient" name="ingredient" placeholder="Enter ingredients, separated by commas" required>
   
     <label for="excluded">Excluded:</label>
-    <input type="text" id="excluded" [(ngModel)]="excluded" name="excluded">
+    <input type="text" id="excluded" [(ngModel)]="excluded" name="excluded" placeholder="Enter excluded ingredients, separated by commas (Optional) " >
   
-    <label for="Calcium">Calcium:</label>
+    <label for="dietLabel">Diet Label:</label>
+    <select id="dietLabel" [(ngModel)]="dietLabel" name="dietLabel">
+      <option value="balanced">Balanced</option>
+      <option value="high-fiber">High-Fiber</option>
+      <option value="high-protein">High-Protein</option>
+      <option value="low-carb">Low-Carb</option>
+      <option value="low-fat">Low-Fat</option>
+      <option value="low-sodium">Low-Sodium</option>
+    </select>
+
+    <label for="calcium">Calcium:</label>
     <input type="text" id="calcium" [(ngModel)]="calcium" name="calcium">
   
     <button type="submit">Submit</button>
