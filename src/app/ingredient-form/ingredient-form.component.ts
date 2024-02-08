@@ -10,6 +10,7 @@ export class IngredientFormComponent {
   name: string = '';
   quantity: number = 0;
   date_of_expiry: string = '';
+  // response: any;
 
   constructor(private http: HttpClient) { }
 
@@ -27,7 +28,7 @@ export class IngredientFormComponent {
       'Content-Type': 'application/json'
     });
 
-  this.http.post('http://django-service:8000/django/api/ingredients/', formData, { headers })
+  this.http.post('http://localhost:8000/django/api/ingredients/', formData, { headers })
     .subscribe(response => {
       console.log('Django API response:', response);
     }, error => {

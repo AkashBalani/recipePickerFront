@@ -13,21 +13,21 @@ export class FindRecipesComponent {
 
   constructor(private http: HttpClient) { }
 
-  getCookie(csrftoken: string) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, csrftoken.length + 1) === (csrftoken + '=')) {
-          cookieValue = decodeURIComponent(cookie.substring(csrftoken.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
+  // getCookie(csrftoken: string) {
+  //   let cookieValue = null;
+  //   if (document.cookie && document.cookie !== '') {
+  //     const cookies = document.cookie.split(';');
+  //     for (let i = 0; i < cookies.length; i++) {
+  //       const cookie = cookies[i].trim();
+  //       // Does this cookie string begin with the name we want?
+  //       if (cookie.substring(0, csrftoken.length + 1) === (csrftoken + '=')) {
+  //         cookieValue = decodeURIComponent(cookie.substring(csrftoken.length + 1));
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   return cookieValue;
+  // }
 
   onSubmit() {
     // Call a service to send data to Django backend
@@ -41,10 +41,10 @@ export class FindRecipesComponent {
 
         const headers = new HttpHeaders({
           'Content-Type': 'application/json',
-          'X-CSRFToken': this.getCookie('csrftoken') ?? ''
+          // 'X-CSRFToken': this.getCookie('csrftoken') ?? ''
         });
 
-      this.http.get('http://localhost/django/api/find_recipes/', { headers })
+      this.http.get('http://localhost:8000/django/api/find_recipes/', { headers })
         .subscribe(response => {
           console.log('Django API response:', response);
         }, error => {

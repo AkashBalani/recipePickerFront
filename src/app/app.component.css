@@ -1,0 +1,21 @@
+nav {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+  }
+  
+  nav a {
+    color: white;
+    margin-right: 10px;
+    text-decoration: none;
+    border-right: 1px solid white; 
+    padding-right: 10px; 
+  }
+
+  nav a:last-child {
+    border-right: none; 
+  }
+  
+  nav a:hover {
+    color: #ddd;
+  }
