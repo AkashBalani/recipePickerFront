@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'find-recipes',
@@ -7,11 +7,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./find-recipes.component.css']
 })
 export class FindRecipesComponent {
-  ingredients: string = '';
+  ingredient: string = '';
   excluded: string = '';
   calcium: string = '';
 
   constructor(private http: HttpClient) { }
+
+  // addIngredient(ingredient: string) {
+  //   if (ingredient) {
+  //     this.ingredients.push(ingredient);
+  //   }
+  // }
 
   // getCookie(csrftoken: string) {
   //   let cookieValue = null;
@@ -31,20 +37,23 @@ export class FindRecipesComponent {
 
   onSubmit() {
     // Call a service to send data to Django backend
-    const formData = {
-      ingredients: this.ingredients,
-      excluded: this.excluded,
-      calcium: this.calcium,
-    };
+    let params = new HttpParams();
+    // this.ingredients.forEach(ingredient => {
+    //   params = params.append('ingredient', ingredient);
+    // });
+    if (this.ingredient) {
+      params = params.append('ingredient', this.ingredient);
+    }
+    if (this.excluded) {
+      params = params.append('excluded', this.excluded);
+    }
+    if (this.calcium) {
+      params = params.append('calcium', this.calcium);
+    }
     // Add code here to send the form data to Django backend
-        console.log('Form submitted:', formData);
+        
 
-        const headers = new HttpHeaders({
-          'Content-Type': 'application/json',
-          // 'X-CSRFToken': this.getCookie('csrftoken') ?? ''
-        });
-
-      this.http.get('http://localhost:8000/django/api/find_recipes/', { headers })
+      this.http.get('http://localhost:8000/django/api/find_recipes/', { params })
         .subscribe(response => {
           console.log('Django API response:', response);
         }, error => {
