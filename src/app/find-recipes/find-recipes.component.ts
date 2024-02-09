@@ -10,6 +10,7 @@ export class FindRecipesComponent {
   ingredient: string = '';
   excluded: string = '';
   dietLabel: string = '';
+  mealType: string = '';
   calcium: string = '';
 
   constructor(private http: HttpClient) { }
@@ -53,6 +54,9 @@ export class FindRecipesComponent {
     }
     if(this.dietLabel) {
       params = params.append('dietLabel', this.dietLabel);
+    }
+    if(this.mealType) {
+      params = params.append('mealType', this.mealType);
     }
     // Add code here to send the form data to Django backend
         

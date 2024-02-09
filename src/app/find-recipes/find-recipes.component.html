@@ -17,6 +17,15 @@
       <option value="low-sodium">Low-Sodium</option>
     </select>
 
+    <label for="mealType">Meal Type:</label>
+    <select id="mealType" [(ngModel)]="mealType" name="mealType">
+      <option value="breakfast">Breakfast</option>
+      <option value="brunch">Brunch</option>
+      <option value="lunch_dinner">Lunch/Dinner</option>
+      <option value="snack">Snack</option>
+      <option value="teatime">Teatime</option>
+    </select>
+
     <label for="calcium">Calcium:</label>
     <input type="text" id="calcium" [(ngModel)]="calcium" name="calcium">
   
