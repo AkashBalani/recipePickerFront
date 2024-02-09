@@ -9,9 +9,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class FindRecipesComponent {
   ingredient: string = '';
   excluded: string = '';
-  dietLabel: string = '';
+  dietLabels: string = '';
   mealType: string = '';
   calcium: string = '';
+  healthLabels: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -52,15 +53,16 @@ export class FindRecipesComponent {
     if (this.calcium) {
       params = params.append('calcium', this.calcium);
     }
-    if(this.dietLabel) {
-      params = params.append('dietLabel', this.dietLabel);
+    if(this.dietLabels) {
+      params = params.append('dietLabel', this.dietLabels);
     }
     if(this.mealType) {
       params = params.append('mealType', this.mealType);
     }
-    // Add code here to send the form data to Django backend
-        
-
+    if(this.healthLabels) {
+      params = params.append('healthLabel', this.healthLabels);
+    }
+    
       this.http.get('http://localhost:8000/django/api/find_recipes/', { params })
         .subscribe(response => {
           console.log('Django API response:', response);
