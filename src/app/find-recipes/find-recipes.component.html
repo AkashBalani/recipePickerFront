@@ -1,13 +1,13 @@
 <h1 class="centered-title">Find Recipes</h1>
 
 <form (ngSubmit)="onSubmit()">
-    <label for="ingredient">Ingredient:</label>
+    <label for="ingredient">Ingredient: (Required)</label>
     <input type="text" id="ingredient" [(ngModel)]="ingredient" name="ingredient" placeholder="Enter ingredients, separated by commas" required>
   
-    <label for="excluded">Excluded:</label>
-    <input type="text" id="excluded" [(ngModel)]="excluded" name="excluded" placeholder="Enter excluded ingredients, separated by commas (Optional) " >
+    <label for="excluded">Excluded: (Optional)</label>
+    <input type="text" id="excluded" [(ngModel)]="excluded" name="excluded" placeholder="Enter excluded ingredients, separated by commas" >
   
-    <label for="dietLabel">Diet Label:</label>
+    <label for="dietLabel">Diet Label: (Optional)</label>
     <select id="dietLabel" [(ngModel)]="dietLabel" name="dietLabel">
       <option value="balanced">Balanced</option>
       <option value="high-fiber">High-Fiber</option>
@@ -17,7 +17,7 @@
       <option value="low-sodium">Low-Sodium</option>
     </select>
 
-    <label for="mealType">Meal Type:</label>
+    <label for="mealType">Meal Type: (Optional)</label>
     <select id="mealType" [(ngModel)]="mealType" name="mealType">
       <option value="breakfast">Breakfast</option>
       <option value="brunch">Brunch</option>
@@ -26,7 +26,7 @@
       <option value="teatime">Teatime</option>
     </select>
 
-    <label for="calcium">Calcium:</label>
+    <label for="calcium">Calcium: (Optional)</label>
     <input type="text" id="calcium" [(ngModel)]="calcium" name="calcium">
   
     <button type="submit">Submit</button>
