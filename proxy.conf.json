@@ -1,0 +1,10 @@
+{
+    "/django/api/ingredients/": {
+      "target": "http://localhost:3000",
+      "secure": false
+    },
+    "/djnago/apiv2": {
+        "target": "http://localhost:3000",
+        "secure": false
+      }
+  }

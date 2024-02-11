@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiUrl = 'http://localhost/django/find_recipes'; // replace with your actual API URL
+  private apiUrl = 'http://localhost:8000/django/api/find_recipes'; // replace with your actual API URL
 
   constructor(private http: HttpClient) { }
 

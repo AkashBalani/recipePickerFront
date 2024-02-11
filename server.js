@@ -8,7 +8,7 @@ const producer = new Producer(client);
 
 app.use(express.json());
 
-app.post('/send', (req, res) => {
+app.post('/django', (req, res) => {
     const payloads = [
         { topic: 'test', messages: JSON.stringify(req.body), partition: 0 }
     ];
