@@ -19,5 +19,8 @@ RUN ng build --base-href /angular/
 # Expose the default port used by Angular
 EXPOSE 4200
 
+# Expose the port used by Express
+EXPOSE 3000
+
 # Start the Angular application
 CMD ["npm", "start"]
