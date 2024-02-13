@@ -1,14 +1,19 @@
 const express = require('express');
 const kafka = require('kafka-node');
 
+const cors = require('cors');
+
+
+
 const app = express();
+app.use(cors());
 const Producer = kafka.Producer;
 const client = new kafka.KafkaClient({kafkaHost: 'localhost:9092'});
 const producer = new Producer(client);
 
 app.use(express.json());
 
-app.post('/django', (req, res) => {
+app.post('/django/api/ingredients/', (req, res) => {
     const payloads = [
         { topic: 'test', messages: JSON.stringify(req.body), partition: 0 }
     ];

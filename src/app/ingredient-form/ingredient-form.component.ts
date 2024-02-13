@@ -28,7 +28,7 @@ export class IngredientFormComponent {
       'Content-Type': 'application/json'
     });
 
-  this.http.post('http://localhost:8000/django/api/ingredients/', formData, { headers })
+  this.http.post('http://localhost:3000/django/api/ingredients/', formData, { headers })
     .subscribe(response => {
       console.log('Django API response:', response);
     }, error => {
