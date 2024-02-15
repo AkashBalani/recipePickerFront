@@ -1,6 +1,9 @@
 # Use the official Node.js image as a base image
 FROM node:latest
 
+# Install dnsutils
+RUN apt-get update && apt-get install -y dnsutils
+
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
