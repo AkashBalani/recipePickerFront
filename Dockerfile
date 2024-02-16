@@ -13,6 +13,9 @@ COPY package*.json ./
 # Install Angular CLI and dependencies
 RUN npm install -g @angular/cli && npm install
 
+# Install dependencies for Express and Kafka client
+RUN npm install express kafka-node
+
 # Copy the rest of the application code to the container
 COPY . .
 

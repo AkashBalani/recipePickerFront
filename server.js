@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 const Producer = kafka.Producer;
-const client = new kafka.KafkaClient({kafkaHost: 'kafka-service.app.svc.cluster.local:9093'});
+const client = new kafka.KafkaClient({kafkaHost: 'kafka-service.app:9093'});
 const producer = new Producer(client);
 
 app.use(express.json());
