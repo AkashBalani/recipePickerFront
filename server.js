@@ -1,22 +1,32 @@
+require('dotenv').config(); // Load environment variables from .env file
 const bodyParser = require('body-parser');
 const express = require('express');
 // const kafka = require('kafka-node');
-const { Kafka, logLevel } = require('kafkajs');
+// const { Kafka, logLevel } = require('kafkajs');
 // const amqp = require('amqplib/callback_api');
-const kafka = new Kafka({
-    clientId: 'my-app',
-    brokers: ['127.0.0.1:9093'],
-    logLevel: logLevel.INFO,
-});
+const AWS = require('aws-sdk');
+// const kafka = new Kafka({
+//     clientId: 'my-app',
+//     brokers: ['127.0.0.1:9094'],
+//     logLevel: logLevel.INFO,
+// });
 
 const cors = require('cors');
 
+AWS.config.credentials = new AWS.Credentials({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  });
+  AWS.config.region = process.env.AWS_REGION;
 
+const sqs = new AWS.SQS();
+
+const queueUrl = process.env.QueueUrl; // Specify the URL of your SQS queue
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-const producer = kafka.producer();
+// const producer = kafka.producer();
 // const AMQP_URL = 'amqp://rabbitmq-service.app:5672';
 // const Producer = kafka.Producer;
 // const client = new kafka.KafkaClient({kafkaHost: '127.0.0.1:9093'});
@@ -30,21 +40,37 @@ app.post('/django/api/ingredients/', async (req, res) => {
     // ];
     const message = JSON.stringify(req.body);
 
+    // Construct params for sending message to SQS
+    const params = {
+        MessageBody: message,
+        QueueUrl: queueUrl,
+        MessageGroupId: 'messageGroup1',
+        MessageDeduplicationId: 'messageDeduplicationId1',
+    };
+
     try {
-        await producer.connect();
-        await producer.send({
-            topic: 'test',
-            messages: [
-                { value: message },
-            ],
-        });
-        await producer.disconnect();
-        res.status(200).json({ message: 'Message sent to Kafka' });
-    }
-    catch (error) { 
+        await sqs.sendMessage(params).promise();
+        res.status(200).json({ message: 'Message sent to SQS' });
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to send message' });
     }
+});
+    // try {
+    //     await producer.connect();
+    //     await producer.send({
+    //         topic: 'test',
+    //         messages: [
+    //             { value: message },
+    //         ],
+    //     });
+    //     await producer.disconnect();
+    //     res.status(200).json({ message: 'Message sent to Kafka' });
+    // }
+    // catch (error) { 
+    //     console.error(error);
+    //     res.status(500).json({ error: 'Failed to send message' });
+    // }
     // producer.send(payloads, (err, data) => {
     //     if (err) {
     //         console.error(err);
@@ -53,7 +79,7 @@ app.post('/django/api/ingredients/', async (req, res) => {
     //         res.status(200).json(data);
     //     }
     // });
-});
+// });
 
 // app.post('/django/api/ingredients/', (req, res) => {
 //     amqp.connect(AMQP_URL, (error0, connection) => {
