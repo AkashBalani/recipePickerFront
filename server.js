@@ -13,15 +13,17 @@ const AWS = require('aws-sdk');
 
 const cors = require('cors');
 
+const awsSecret = JSON.parse(await readFileAsync('/var/run/secrets/kubernetes.io/serviceaccount/angular-secret', 'utf8'));
+
 AWS.config.credentials = new AWS.Credentials({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    accessKeyId: awsSecret.AWS_ACCESS_KEY_ID,
+    secretAccessKey: awsSecret.AWS_SECRET_ACCESS_KEY
   });
-  AWS.config.region = process.env.AWS_REGION;
+  AWS.config.region = awsSecret.AWS_REGION;
 
 const sqs = new AWS.SQS();
 
-const queueUrl = process.env.QueueUrl; // Specify the URL of your SQS queue
+const queueUrl = awsSecret.QueueUrl; // Specify the URL of your SQS queue
 
 const app = express();
 app.use(cors());
