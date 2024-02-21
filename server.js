@@ -1,4 +1,6 @@
 require('dotenv').config(); // Load environment variables from .env file
+const fs = require('fs');
+const { promisify } = require('util');
 const bodyParser = require('body-parser');
 const express = require('express');
 // const kafka = require('kafka-node');
@@ -13,21 +15,48 @@ const AWS = require('aws-sdk');
 
 const cors = require('cors');
 
-const awsSecret = JSON.parse(await readFileAsync('/var/run/secrets/kubernetes.io/serviceaccount/angular-secret', 'utf8'));
-
-AWS.config.credentials = new AWS.Credentials({
-    accessKeyId: awsSecret.AWS_ACCESS_KEY_ID,
-    secretAccessKey: awsSecret.AWS_SECRET_ACCESS_KEY
-  });
-  AWS.config.region = awsSecret.AWS_REGION;
-
-const sqs = new AWS.SQS();
-
-const queueUrl = awsSecret.QueueUrl; // Specify the URL of your SQS queue
-
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+const readFileAsync = promisify(fs.readFile);
+(async () => {
+    try {
+        const awsSecret = JSON.parse(await readFileAsync('/var/run/secrets/kubernetes.io/serviceaccount/angular-secret', 'utf8'));
+        
+        AWS.config.credentials = new AWS.Credentials({
+            accessKeyId: awsSecret.AWS_ACCESS_KEY_ID,
+            secretAccessKey: awsSecret.AWS_SECRET_ACCESS_KEY
+        });
+        AWS.config.region = awsSecret.AWS_REGION;
+
+        const sqs = new AWS.SQS();
+        const queueUrl = awsSecret.QueueUrl;
+
+        app.post('/django/api/ingredients/', async (req, res) => {
+            const message = JSON.stringify(req.body);
+            const params = {
+                MessageBody: message,
+                QueueUrl: queueUrl,
+                MessageGroupId: 'messageGroup1',
+                MessageDeduplicationId: 'messageDeduplicationId1',
+            };
+
+            try {
+                await sqs.sendMessage(params).promise();
+                res.status(200).json({ message: 'Message sent to SQS' });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Failed to send message' });
+            }
+        });
+
+        app.listen(3000, () => console.log('Listening on port 3000'));
+    } catch (error) {
+        console.error('Error reading AWS secret:', error);
+        process.exit(1); // Exit the process if there's an error
+    }
+})();
 // const producer = kafka.producer();
 // const AMQP_URL = 'amqp://rabbitmq-service.app:5672';
 // const Producer = kafka.Producer;
@@ -36,28 +65,28 @@ app.use(bodyParser.json());
 
 // app.use(express.json());
 
-app.post('/django/api/ingredients/', async (req, res) => {
-    // const payloads = [
-    //     { topic: 'test', messages: JSON.stringify(req.body), partition: 0 }
-    // ];
-    const message = JSON.stringify(req.body);
+// app.post('/django/api/ingredients/', async (req, res) => {
+//     // const payloads = [
+//     //     { topic: 'test', messages: JSON.stringify(req.body), partition: 0 }
+//     // ];
+//     const message = JSON.stringify(req.body);
 
-    // Construct params for sending message to SQS
-    const params = {
-        MessageBody: message,
-        QueueUrl: queueUrl,
-        MessageGroupId: 'messageGroup1',
-        MessageDeduplicationId: 'messageDeduplicationId1',
-    };
+//     // Construct params for sending message to SQS
+//     const params = {
+//         MessageBody: message,
+//         QueueUrl: queueUrl,
+//         MessageGroupId: 'messageGroup1',
+//         MessageDeduplicationId: 'messageDeduplicationId1',
+//     };
 
-    try {
-        await sqs.sendMessage(params).promise();
-        res.status(200).json({ message: 'Message sent to SQS' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to send message' });
-    }
-});
+//     try {
+//         await sqs.sendMessage(params).promise();
+//         res.status(200).json({ message: 'Message sent to SQS' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Failed to send message' });
+//     }
+// });
     // try {
     //     await producer.connect();
     //     await producer.send({
@@ -110,4 +139,4 @@ app.post('/django/api/ingredients/', async (req, res) => {
 //     });
 // });
 
-app.listen(3000, () => console.log('Listening on port 3000'));
+// app.listen(3000, () => console.log('Listening on port 3000'));
