@@ -22,16 +22,24 @@ app.use(bodyParser.json());
 const readFileAsync = promisify(fs.readFile);
 (async () => {
     try {
-        const awsSecret = JSON.parse(await readFileAsync('/var/run/secrets/kubernetes.io/serviceaccount/angular-secret', 'utf8'));
+        // const awsSecret = JSON.parse(await readFileAsync('/var/run/secrets/kubernetes.io/serviceaccount', 'utf8'));
         
-        AWS.config.credentials = new AWS.Credentials({
-            accessKeyId: awsSecret.AWS_ACCESS_KEY_ID,
-            secretAccessKey: awsSecret.AWS_SECRET_ACCESS_KEY
+        // AWS.config.credentials = new AWS.Credentials({
+        //     accessKeyId: awsSecret.AWS_ACCESS_KEY_ID,
+        //     secretAccessKey: awsSecret.AWS_SECRET_ACCESS_KEY
+        // });
+        // AWS.config.region = awsSecret.AWS_REGION;
+
+        AWS.config.update({
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            region: process.env.AWS_REGION
         });
-        AWS.config.region = awsSecret.AWS_REGION;
 
         const sqs = new AWS.SQS();
-        const queueUrl = awsSecret.QueueUrl;
+        const queueUrl = process.env.QueueUrl;
+
+        AWS.config.logger = console;
 
         app.post('/django/api/ingredients/', async (req, res) => {
             const message = JSON.stringify(req.body);
