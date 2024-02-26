@@ -13,6 +13,7 @@ export class FindRecipesComponent {
   mealType: string = '';
   calcium: string = '';
   healthLabels: string = '';
+  cuisineType: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -61,6 +62,9 @@ export class FindRecipesComponent {
     }
     if(this.healthLabels) {
       params = params.append('healthLabel', this.healthLabels);
+    }
+    if(this.cuisineType) {
+      params = params.append('cuisineType', this.cuisineType);
     }
     
       this.http.get('http://localhost:8000/django/api/find_recipes/', { params })
