@@ -14,6 +14,7 @@ export class FindRecipesComponent {
   calcium: string = '';
   healthLabels: string = '';
   cuisineType: string = '';
+  responseData: any;
 
   constructor(private http: HttpClient) { }
 
@@ -66,10 +67,13 @@ export class FindRecipesComponent {
     if(this.cuisineType) {
       params = params.append('cuisineType', this.cuisineType);
     }
+
+    this.responseData = null;
     
       this.http.get('http://localhost:8000/django/api/find_recipes/', { params })
         .subscribe(response => {
           console.log('Django API response:', response);
+          this.responseData = response;
         }, error => {
           console.error('Error:', error);
         });
