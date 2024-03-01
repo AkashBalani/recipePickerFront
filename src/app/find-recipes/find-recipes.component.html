@@ -118,6 +118,18 @@
         <ul>
           <li *ngFor="let diet of hit.recipe.dietLabels">{{ diet }}</li>
         </ul>
+        <h4>Dish Type:</h4>
+        <ul>
+          <li *ngFor="let dish of hit.recipe.dishType">{{ dish }}</li>
+        </ul>
+        <h4>Health Labels:</h4>
+        <ul>
+          <li *ngFor="let health of hit.recipe.healthLabels">{{ health }}</li>
+        </ul>
+        <h4>Meal Type:</h4>
+        <ul>
+          <li *ngFor="let meal of hit.recipe.mealType">{{ meal }}</li>
+        </ul>
       </div>
     </div>
   </div>
