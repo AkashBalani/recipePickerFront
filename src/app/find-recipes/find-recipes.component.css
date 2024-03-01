@@ -34,3 +34,27 @@ form {
   .centered-title {
     text-align: center;
   }
+
+  .hit-container {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .hit-content {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .image-container {
+    margin-right: 20px;
+  }
+  
+  .image-container img {
+    width: 150px; /* Adjust the width as needed */
+  }
+  
+  .info-container {
+    flex-grow: 1;
+    margin-left: 20px;
+  }
+  

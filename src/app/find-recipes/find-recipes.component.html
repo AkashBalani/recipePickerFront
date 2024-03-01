@@ -98,5 +98,28 @@
 
 <div *ngIf="responseData">
   <h2>Response Data:</h2>
-  <pre>{{ responseData | json }}</pre>
+  <!-- <p>From: {{ responseData.from }}</p>
+  <p>To: {{ responseData.to }}</p>
+  <p>Count: {{ responseData.count }}</p> -->
+
+  <h3>Recipes:</h3>
+  <div *ngFor="let hit of responseData.hits">
+    <div *ngIf="hit.recipe" class="hit-content">
+      <div class="image-container">
+        <h4>{{ hit.recipe.label }}</h4>
+        <img [src]="hit.recipe.image" alt="{{ hit.recipe.label }}">
+      </div>
+      <div class="info-container">
+        <h4>Cuisine Types:</h4>
+        <ul>
+          <li *ngFor="let cuisine of hit.recipe.cuisineType">{{ cuisine }}</li>
+        </ul>
+        <h4>Diet Labels:</h4>
+        <ul>
+          <li *ngFor="let diet of hit.recipe.dietLabels">{{ diet }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
+

@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+interface Recipe {
+  name: string;
+  ingredients: string[];
+  instructions: string[];
+}
+
 @Component({
   selector: 'find-recipes',
   templateUrl: './find-recipes.component.html',
@@ -15,6 +21,8 @@ export class FindRecipesComponent {
   healthLabels: string = '';
   cuisineType: string = '';
   responseData: any;
+  recipes: Recipe[] = [];
+
 
   constructor(private http: HttpClient) { }
 
@@ -69,11 +77,19 @@ export class FindRecipesComponent {
     }
 
     this.responseData = null;
+    this.recipes = [];
     
-      this.http.get('http://localhost:8000/django/api/find_recipes/', { params })
-        .subscribe(response => {
+      this.http.get<any>('http://localhost:8000/django/api/find_recipes/', { params })
+        .subscribe((response: any) => {
           console.log('Django API response:', response);
           this.responseData = response;
+          if (Array.isArray(response.hits)) {
+            this.recipes = response.hits.map((hit: { recipe: { label: any; ingredients: any[]; instructions: any; }; }) => ({
+              label: hit.recipe.label,
+              ingredients: hit.recipe.ingredients.map((ingredient: any) => ingredient.text),
+              instructions: hit.recipe.instructions
+            }));
+          }
         }, error => {
           console.error('Error:', error);
         });
