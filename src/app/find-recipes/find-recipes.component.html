@@ -98,10 +98,6 @@
 
 <div *ngIf="responseData">
   <h2 class="centered-title">Response Data:</h2>
-  <!-- <p>From: {{ responseData.from }}</p>
-  <p>To: {{ responseData.to }}</p>
-  <p>Count: {{ responseData.count }}</p> -->
-
   <h3>Recipes:</h3>
   <div *ngFor="let hit of responseData.hits">
     <div *ngIf="hit.recipe" class="hit-content">

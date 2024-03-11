@@ -43,6 +43,11 @@ form {
   .hit-content {
     display: flex;
     align-items: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .image-container {
@@ -51,11 +56,28 @@ form {
   }
   
   .image-container img {
-    width: 150px; /* Adjust the width as needed */
+    width: 150px;
+    border-radius: 5px;
   }
   
   .info-container {
     flex-grow: 1;
     margin-left: 20px;
   }
+
+  /* Style for lists */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+/* Style for headings */
+h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
   
